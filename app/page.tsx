@@ -23,18 +23,18 @@ export default function Home() {
   }, [])
 
   // Fungsi untuk cek user berdasarkan NIK
-  async function cekUser(nik) {
+  async function cekUser(userNik) {
     const { data, error } = await supabase
       .from('users')
       .select('*')
-      .eq('nik', nik)
+      .eq('nik', userNik)
       .single()
 
     if (data) {
       setUser(data)
-      setNik(nik)
+      setNik(userNik)
       setShowNikInput(false)
-      localStorage.setItem('userNik', nik)
+      localStorage.setItem('userNik', userNik)
       loadDashboard()
     } else {
       alert('NIK tidak ditemukan!')
@@ -232,7 +232,7 @@ export default function Home() {
                 <th style={{ padding: '15px', fontSize: '20px' }}>START</th>
                 <th style={{ padding: '15px', fontSize: '20px' }}>FINISH</th>
                 <th style={{ padding: '15px', fontSize: '20px' }}>TYPE</th>
-              </tr>
+               </tr>
             </thead>
             <tbody>
               {filteredData.map((item, index) => (
@@ -359,7 +359,7 @@ export default function Home() {
 
 // MODAL PACKING
 function PackingModal({ onClose, user }) {
-  const [mode, setMode] = useState('select') // select, start, finish
+  const [mode, setMode] = useState('select')
   const [barcode, setBarcode] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -562,7 +562,7 @@ function PackingModal({ onClose, user }) {
   )
 }
 
-// MODAL ISSUE (sederhana dulu)
+// MODAL ISSUE
 function IssueModal({ onClose, user }) {
   const [form, setForm] = useState({
     whs: '',
@@ -575,7 +575,6 @@ function IssueModal({ onClose, user }) {
     status: '',
     qtySticker: '',
     qtyActual: '',
-    namaPIC: '',
     remarks: ''
   })
 
@@ -720,7 +719,7 @@ function IssueModal({ onClose, user }) {
   )
 }
 
-// MODAL CASE (sederhana)
+// MODAL CASE
 function CaseModal({ onClose, user }) {
   const [form, setForm] = useState({
     date: '',
